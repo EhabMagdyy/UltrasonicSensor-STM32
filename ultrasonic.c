@@ -18,8 +18,8 @@ static volatile uint32_t IC_Difference = 0;
 static void Delay_10US(void)
 {
 	__HAL_TIM_SET_COUNTER(ULTRASONIC_ECHO_PIN_IC, 0);
-	/* TIMER Tick time = 2us */
-	while(__HAL_TIM_GET_COUNTER(ULTRASONIC_ECHO_PIN_IC) < 5);
+	/* TIMER Tick time = 1us */
+	while(__HAL_TIM_GET_COUNTER(ULTRASONIC_ECHO_PIN_IC) < 10);
 }
 
 void Ultrasonic_Get_Distance(void)
