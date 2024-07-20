@@ -1,25 +1,24 @@
-/*****************************************************************************************
- ****************** @file           : ultrasonic.c		              ********************
- ****************** @author         : Ehab Magdy Abdallah             ********************
- ****************** @brief          : interface Ultrasonic Driver     ********************
-******************************************************************************************/
+/*****************************************************************************************************************************
+**********************************    Author  : Ehab Magdy Abdullah                      *************************************
+**********************************    Linkedin: https://www.linkedin.com/in/ehabmagdyy/  *************************************
+**********************************    Youtube : https://www.youtube.com/@EhabMagdyy      *************************************
+******************************************************************************************************************************/
 
 #include "ultrasonic.h"
 
 extern TIM_HandleTypeDef htim2;
 extern uint16_t distance;
-
-extern uint8_t isUltrasonicReadingFinished;
 static volatile uint8_t isRisingCaptured = 0;
 static volatile uint32_t IC_Value1 = 0;
 static volatile uint32_t IC_Value2 = 0;
 static volatile uint32_t IC_Difference = 0;
 
+
 static void Delay_10US(void)
 {
 	__HAL_TIM_SET_COUNTER(ULTRASONIC_ECHO_PIN_IC, 0);
-	/* TIMER Tick time = 2us */
-	while(__HAL_TIM_GET_COUNTER(ULTRASONIC_ECHO_PIN_IC) < 5);
+	/* TIMER Tick time = 1us */
+	while(__HAL_TIM_GET_COUNTER(ULTRASONIC_ECHO_PIN_IC) < 10);
 }
 
 void Ultrasonic_Get_Distance(void)
@@ -61,7 +60,6 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
 		isRisingCaptured = 0;
 		__HAL_TIM_SET_CAPTUREPOLARITY(htim, TIM_CHANNEL_1, TIM_INPUTCHANNELPOLARITY_RISING);
 		__HAL_TIM_DISABLE_IT(&htim2, TIM_IT_CC1);
-		isUltrasonicReadingFinished = 1;
 	}
 	else{ /* Nothing */ }
 }
