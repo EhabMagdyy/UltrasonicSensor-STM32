@@ -8,11 +8,11 @@
 
 extern TIM_HandleTypeDef htim2;
 extern uint16_t distance;
+extern uint8_t isReadingFinished;
 static volatile uint8_t isRisingCaptured = 0;
 static volatile uint32_t IC_Value1 = 0;
 static volatile uint32_t IC_Value2 = 0;
 static volatile uint32_t IC_Difference = 0;
-
 
 static void Delay_10US(void)
 {
@@ -56,6 +56,8 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
 		}
 
 		distance = IC_Difference * 0.0173;
+
+		isReadingFinished = 1;
 
 		isRisingCaptured = 0;
 		__HAL_TIM_SET_CAPTUREPOLARITY(htim, TIM_CHANNEL_1, TIM_INPUTCHANNELPOLARITY_RISING);
